@@ -1,15 +1,58 @@
 // require in the database adapter functions as you write them (createUser, createActivity...)
 // const { } = require('./');
 const client = require("./client")
+const { createUser } = require("./users")
+const { createActivity } = require("./activities");
+const { createRoutine, getRoutinesWithoutActivities } = require("./routines");
 
 async function dropTables() {
   console.log("Dropping All Tables...")
   // drop all tables, in the correct order
+  await client.query(`
+    DROP TABLE IF EXISTS routine_activities;
+    DROP TABLE IF EXISTS routines;
+    DROP TABLE IF EXISTS activities;
+    DROP TABLE IF EXISTS users;
+      `);
 }
 
 async function createTables() {
   console.log("Starting to build tables...")
   // create all tables, in the correct order
+  try {
+    await client.query(`
+    CREATE TABLE users (
+      id SERIAL primary key,
+      username VARCHAR(75) UNIQUE NOT NULL,
+      password VARCHAR(255) NOT NULL
+    );
+
+    CREATE TABLE activities (
+      id SERIAL primary key,
+      name VARCHAR(255) UNIQUE NOT NULL,
+      description TEXT UNIQUE NOT NULL
+    );
+
+    CREATE TABLE routines (
+      id SERIAL primary key,
+      "creatorId" INTEGER REFERENCES users(id),
+      isPublic BOOLEAN DEFAULT false,
+      name VARCHAR(255) UNIQUE NOT NULL,
+      goal TEXT UNIQUE NOT NULL
+    );
+
+    CREATE TABLE routine_activities (
+      "routineId" INTEGER REFERENCES routines(id),
+      "activityId" INTEGER REFERENCES activities(id),
+      count INTEGER NOT NULL,
+      duration INTEGER NOT NULL
+    );
+
+    `)
+  } catch (error) {
+    console.error("Error building tables!");
+    throw error;
+  }
 }
 
 /* 
