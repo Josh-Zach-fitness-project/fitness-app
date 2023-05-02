@@ -38,7 +38,7 @@ async function createTables() {
       "creatorId" INTEGER REFERENCES users(id),
       isPublic BOOLEAN DEFAULT false,
       name VARCHAR(255) UNIQUE NOT NULL,
-      goal TEXT UNIQUE NOT NULL
+      goal TEXT NOT NULL
     );
 
     CREATE TABLE routine_activities (
