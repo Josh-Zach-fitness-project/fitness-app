@@ -16,10 +16,36 @@ async function createActivity({ name, description }) {
 }
 
 async function getAllActivities() {
-  // select and return an array of all activities
+  const { rows: activity } = await client.query(`
+  SELECT *
+  FROM activities;
+  `)
+  console.log('GGGGG: ', activity);
+const activities = await Promise.all(activity.map(act => get))
+  return activities
 }
 
-async function getActivityById(id) {}
+// NEED TO FINISH THE PROMISE MAPPING, SEE EXAMPLE BELOW
+
+// const { rows: postIds } = await client.query(
+//   `SELECT * 
+//   FROM posts;
+//   `);
+// const posts = await Promise.all(postIds.map(post => getPostById(post.id)))
+
+// return posts;
+
+async function getActivityById(id) {
+  try {
+    const {rows: [activity] } = await client.query(`
+    SELECT *
+    FROM activities
+    WHERE id=$1
+    `, [id]);
+    return activity
+  } catch (error) {
+  }
+}
 
 async function getActivityByName(name) {}
 
