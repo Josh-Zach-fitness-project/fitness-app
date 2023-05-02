@@ -2,8 +2,10 @@
 // const { } = require('./');
 const client = require("./client")
 const { createUser, getUserByUsername } = require("./users")
-const { createActivity } = require("./activities");
+const { createActivity, getAllActivities } = require("./activities");
 const { createRoutine, getRoutinesWithoutActivities } = require("./routines");
+const { addActivityToRoutine} = require('./routine_activities')
+
 
 async function dropTables() {
   console.log("Dropping All Tables...")
@@ -36,17 +38,18 @@ async function createTables() {
     CREATE TABLE routines (
       id SERIAL primary key,
       "creatorId" INTEGER REFERENCES users(id),
-      isPublic BOOLEAN DEFAULT false,
+      "isPublic" BOOLEAN DEFAULT false,
       name VARCHAR(255) UNIQUE NOT NULL,
       goal TEXT NOT NULL
     );
 
     CREATE TABLE routine_activities (
       id SERIAL primary key,
-      "routineId" INTEGER REFERENCES routines(id) UNIQUE,
-      "activityId" INTEGER REFERENCES activities(id) UNIQUE,
+      "routineId" INTEGER REFERENCES routines(id),
+      "activityId" INTEGER REFERENCES activities(id),
       count INTEGER,
-      duration INTEGER
+      duration INTEGER,
+      UNIQUE ("routineId", "activityId")
     );
 
     `)

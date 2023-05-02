@@ -12,7 +12,6 @@ async function addActivityToRoutine({
     VALUES ($1, $2, $3, $4)
     RETURNING *;
     `, [routineId, activityId, count, duration]);
-    console.log("!!!!!!!!!", routine_activity);
     return routine_activity;
   } catch (error) {
     throw error;
