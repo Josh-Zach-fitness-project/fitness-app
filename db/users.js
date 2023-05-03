@@ -58,6 +58,7 @@ async function getUserByUsername(userName) {
     `, [userName]);
     return user
   } catch (error) {
+    throw error;
   }
 }
 
