@@ -10,7 +10,7 @@ client.connect();
 // Setup your Middleware and API Router here
 app.use(cors());
 app.use(morgan("dev"));
-app.use("/api", apiRouter);
+app.use(express.json());
 
 app.use((req, res, next) => {
     console.log("<____Body Logger START____>");
@@ -20,5 +20,6 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use("/api", apiRouter);
 
 module.exports = app;
