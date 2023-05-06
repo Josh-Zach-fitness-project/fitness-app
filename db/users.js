@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 // database functions
 
 const requireUser = (req, res, next) => {
+  // console.log('HHHHHHHH', req)
+  // console.log('HHHHHHHH', req)
   if(!req.user) {
       next({
           name: 'Not loggin in',

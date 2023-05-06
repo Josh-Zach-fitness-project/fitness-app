@@ -2,8 +2,8 @@
 const express = require("express");
 const { getUserByUsername, createUser, getUser, requireUser, getAllRoutinesByUser } = require("../db");
 const jwt = require("jsonwebtoken");
-const { UserTakenError } = require("../errors");
 const usersRouter = express.Router();
+
 
 // POST /api/users/register
 usersRouter.post("/register", async (req, res, next) => {
@@ -12,16 +12,16 @@ usersRouter.post("/register", async (req, res, next) => {
         const _user = await getUserByUsername(username);
         if (_user) {
             next({
-                error: "Error",
+                error:"Error",
                 name: "UserExistsError",
-                message: UserTakenError(username)
+                message: `User ${username} is already taken.`
             });
         }
 
         if (password.length < 8) {
             next({
                 error: "Error",
-                name: "InvalidPasswordError",
+                name: "Password Too Short!",
                 message: "Password Too Short!"
             });
         }    
@@ -47,34 +47,35 @@ usersRouter.post("/register", async (req, res, next) => {
 // POST /api/users/login
 usersRouter.post("/login", async (req, res, next) => {
     const {username, password} = req.body;
+    if (!username || !password) {
+        next({
+            error: "Error",  
+            name: "MissingCredentialsError",
+            message: "Please supply both a username and password"
+        });
+    } 
     try {
+        const user = await getUserByUsername(username);
         
-        if (!username || !password) {
-            next({
-                error: "Error",  
-                name: "MissingCredentialsError",
-                message: "Please supply both a username and password"
+        const token = jwt.sign(user, process.env.JWT_SECRET);
+
+        res.send({
+                
+                message: "you're logged in!",
+                user,
+                token
             });
-        } else {
-            const user = await getUser({username, password});
-            
-            const token = jwt.veryify(user, process.env.JWT_SECRET);
-
-            res.send(["hello"]);
-        }
-
-
-        
     } catch (error) {
         next(error);
     }
 });
 // GET /api/users/me
-usersRouter.get("/me", requireUser, async (req, res, next) => {
-    const {username} = user.body;
+usersRouter.get("/me", async (req, res, next) => {
+    console.log('PPPPPPP', req.user)
+    const {username, password} = req.user;
     try {
-        const data = await getAllRoutinesByUser(username)
-        res.send(data)
+        const user = await getUser({username, password})
+        res.send(user)
     } catch (error) {
         next(error)
     }
