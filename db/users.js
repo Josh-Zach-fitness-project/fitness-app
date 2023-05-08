@@ -1,13 +1,32 @@
 const client = require("./client");
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
+const {JWT_SECRET} = process.env;
 
 // database functions
 
-const requireUser = (req, res, next) => {
+const requireUser = async (req, res, next) => {
+
+  const prefix = 'Bearer ';
+  const auth = req.header('Authorization');
+  if (!auth) {
+      next();
+  } else if (auth.startsWith(prefix)){
+      const token = auth.slice(prefix.length);
+      
+      const {id} = jwt.verify(token, JWT_SECRET);
+      if (id) {
+          req.user = await getUserById(id)
+          console.log('YYYYYYY', req.user)
+              next();
+          }
+  }
+
   if(!req.user) {
       next({
-          name: 'Not loggin in',
-          message: 'You must be logged in to access this page'
+        name: 'Not loggin in',
+        message: "You must be logged in to perform this action",
+        error: 'Error'
       });
   }
   next();

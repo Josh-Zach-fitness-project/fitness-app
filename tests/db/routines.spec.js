@@ -294,7 +294,7 @@ describe("DB Routines", () => {
   });
 
   describe("getPublicRoutinesByUser", () => {
-    xit("should include the public routine", async () => {
+    it("should include the public routine", async () => {
       const routines = await getPublicRoutinesByUser(fakeUser);
       expectRoutinesToContainRoutine(routines, fakeRoutine);
     });
