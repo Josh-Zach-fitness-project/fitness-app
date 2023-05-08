@@ -66,7 +66,7 @@ async function attachActivitiesToRoutines(routines) {
   SELECT activities.*, routine_activities.duration, routine_activities.count, routine_activities."routineId", routine_activities.id AS "routineActivityId"
   FROM activities
   JOIN routine_activities ON routine_activities."activityId" = activities.id
-  WHERE routine_activities."routineId" IN (${position})
+  WHERE routine_activities."routineId" IN (${position});
   `,
     routineIds
   );

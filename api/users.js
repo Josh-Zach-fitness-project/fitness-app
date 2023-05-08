@@ -86,9 +86,9 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
 usersRouter.get("/:username/routines", requireUser, async (req, res, next) => {
     try {
         const {username} = req.user;
-        console.log('RRRRRR', username)
+        // console.log('RRRRRR', username)
         const routines = await getPublicRoutinesByUser(username)
-        console.log('TTTTTTTT', routines)
+        // console.log('TTTTTTTT', routines)
         res.send(routines)
     } catch (error) {
         next(error)
