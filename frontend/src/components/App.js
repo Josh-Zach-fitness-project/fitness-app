@@ -10,6 +10,10 @@ import { fetchActivities, fetchRoutines } from '../api';
 const App = () => {
     const [routines, setRoutines] = useState([]);
     const [activities, setActivities] = useState([]);
+    const [token, setToken] = useState(localStorage.token);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState({});
+
 
     useEffect(() => {
         const getData = async () => {
@@ -17,18 +21,16 @@ const App = () => {
             setRoutines(fetchedRoutines);
             const fetchedActivities = await fetchActivities();
             setActivities(fetchedActivities)
-            // console.log(fetchedActivities)
         }
         getData();
     }, [])
-    console.log(routines)
     return(
     <>
     <NavBar />
     <Routes>
-        <Route path='/' element={<Welcome />}></Route>
+        <Route path='/' element={<Welcome token={token} setToken={setToken} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} user={user} setUser={setUser} />}></Route>
         <Route path='/activities' element={<Activities activities={activities}/>}></Route>
-        <Route path='/routines' element={<Routines routines={routines}/>}></Route>
+        <Route path='/routines' element={<Routines routines={routines} />}></Route>
         <Route path='/my-routines' element={<MyRoutines />}></Route>
     </Routes>
     </>
