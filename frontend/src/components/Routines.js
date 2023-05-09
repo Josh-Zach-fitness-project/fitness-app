@@ -1,12 +1,11 @@
 import React from 'react';
 
-const Routines = (props) => {
-    console.log(props)
+const Routines = ({routines}) => {
     
     return(
     <>
     <div>Routines Page</div>
-    {/* <section>
+    <section>
         <h1>These are the Routines</h1>
         {routines.length ? routines.map((routine) => {
             return (
@@ -14,12 +13,12 @@ const Routines = (props) => {
                     <h2>{routine.name}</h2>
                     <p>{routine.goal}</p>
                     <p>{routine.creatorName}</p>
-                    <p>{routine.activities}</p>
+                    {/* <p>{routine.activities}</p> */}
                 </article>
             )
             
         }) : <h1>No routines to display</h1>}
-    </section> */}
+    </section>
     </>
     )
 }
