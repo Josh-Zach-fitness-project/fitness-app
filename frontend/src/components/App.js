@@ -26,7 +26,7 @@ const App = () => {
     }, [])
     return(
     <>
-    <NavBar />
+    <NavBar setIsLoggedIn={setIsLoggedIn} setUser={setUser} setToken={setToken}/>
     <Routes>
         <Route path='/' element={<Welcome token={token} setToken={setToken} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} user={user} setUser={setUser} />}></Route>
         <Route path='/activities' element={<Activities activities={activities}/>}></Route>

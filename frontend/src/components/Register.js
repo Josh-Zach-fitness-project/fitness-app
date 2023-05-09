@@ -7,12 +7,11 @@ const Register = ({setToken, setIsLoggedIn, setUser}) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const userToRegister = {username: username, password: password};
-        const data = await authenticateNewUser(userToRegister);
+        const data = await authenticateNewUser({username: username, password: password});
         if(data.token) {
             setToken(data.token);
             setIsLoggedIn(true);
-            setUser(username);
+            setUser(data.user);
         } 
         setUsername("");
         setPassword("");
@@ -20,6 +19,7 @@ const Register = ({setToken, setIsLoggedIn, setUser}) => {
 
     return(
         <>
+        <h2>Register</h2>
         <form onSubmit={handleSubmit}>
             <input
             placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)}

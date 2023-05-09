@@ -1,4 +1,4 @@
-const APIURL = 'http://fitnesstrac-kr.herokuapp.com/api/'
+const APIURL = 'http://fitnesstrac-kr.herokuapp.com/api'
 
 export const fetchRoutines = async () => {
     try {
