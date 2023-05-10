@@ -42,6 +42,7 @@ export const fetchUser = async (token) => {
 }
 
 export const userCreatedRoutines = async ({token, name, goal, isPublic}) => {
+    console.log('HHHHHHH', isPublic)
     try {
       const response = await fetch(`${APIURL}/routines`, {
         method: "POST",

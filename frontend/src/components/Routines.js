@@ -3,8 +3,6 @@ import CreateRoutineForm from './CreateRoutineForm';
 
 const Routines = ({routines, user, isLoggedIn, token}) => {
     const [myRoutines, setMyRoutines] = useState(false)
-    console.log("This is routines", routines);
-    console.log("This is user", user); 
     console.log("This is isLoggedIn", isLoggedIn)
     const filteredRoutines = routines.filter((routine) => {
         routine.creatorId === user.id
