@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Routines = ({routines}) => {
+    const [myRoutines, setMyRoutines] = useState(false)
     
     return(
     <>
+
     <div>Routines Page</div>
     <section>
-        <h1>These are the Routines</h1>
+        <h1>These are the Public Routines</h1>
         {routines.length ? routines.map((routine) => {
             return (
                 <article key={routine.id} id='singleRoutine'>
