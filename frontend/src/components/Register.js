@@ -12,7 +12,7 @@ const Register = ({setToken, setIsLoggedIn, setUser}) => {
             setToken(data.token);
             setIsLoggedIn(true);
             setUser(data.user);
-        } 
+        } else {alert('That username is taken!')}
         setUsername("");
         setPassword("");
     }
@@ -22,10 +22,18 @@ const Register = ({setToken, setIsLoggedIn, setUser}) => {
         <h2>Register</h2>
         <form onSubmit={handleSubmit}>
             <input
-            placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)}
+            placeholder="Username" 
+            value={username} 
+            onChange={(event) => setUsername(event.target.value)}
+            required
             ></input>
             <input
-            placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)}
+            type='text'
+            minlength='8'
+            placeholder="Password(min. 8 characters)" 
+            value={password} 
+            onChange={(event) => setPassword(event.target.value)}
+            required
             ></input>
             <button type="submit"
             

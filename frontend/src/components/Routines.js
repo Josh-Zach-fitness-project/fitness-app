@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import CreateRoutineForm from './CreateRoutineForm';
 
-const Routines = ({routines, user, isLoggedIn, token}) => {
+const Routines = ({routines, setRoutines, isLoggedIn, token, filteredRoutines}) => {
     const [myRoutines, setMyRoutines] = useState(false)
-    console.log("This is isLoggedIn", isLoggedIn)
-    const filteredRoutines = routines.filter((routine) => {
-        routine.creatorId === user.id
-    });
+    
     if (!isLoggedIn) {
         return(
         <>
@@ -32,7 +29,7 @@ const Routines = ({routines, user, isLoggedIn, token}) => {
             return(
                 <>
                 <div>Routines Page</div>
-                <CreateRoutineForm token={token}/>
+                <CreateRoutineForm token={token} routines={routines} setRoutines={setRoutines}/>
                 <section>
                     <button
                     onClick={() => {
@@ -58,7 +55,7 @@ const Routines = ({routines, user, isLoggedIn, token}) => {
             return(
                 <>
                 <div>My Routines Page</div>
-                <CreateRoutineForm token={token}/>
+                <CreateRoutineForm token={token} routines={routines} setRoutines={setRoutines}/>
                 <section>
                     <button
                     onClick={() => {
@@ -66,7 +63,7 @@ const Routines = ({routines, user, isLoggedIn, token}) => {
                     }}
                     >View Public Routines</button>
                     <h1>These are my Routines</h1>
-                    {filteredRoutines.length ? routines.map((routine) => {
+                    {filteredRoutines.length ? filteredRoutines.map((routine) => {
                         return (
                             <article key={routine.id} id='singleRoutine'>
                                 <h2>{routine.name}</h2>

@@ -41,8 +41,7 @@ export const fetchUser = async (token) => {
       }
 }
 
-export const userCreatedRoutines = async ({token, name, goal, isPublic}) => {
-    console.log('HHHHHHH', isPublic)
+export const userCreatedRoutines = async ({token, name, goal, pub}) => {
     try {
       const response = await fetch(`${APIURL}/routines`, {
         method: "POST",
@@ -53,11 +52,10 @@ export const userCreatedRoutines = async ({token, name, goal, isPublic}) => {
         body: JSON.stringify({
           name: name,
           goal: goal,
-          isPublic: isPublic
+          isPublic: pub
         })
       });
       const result = await response.json();
-      console.log("this is our userCreatedRoutines result:", result);
       return result
     } catch (err) {
       console.error(err);

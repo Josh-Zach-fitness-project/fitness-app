@@ -1,39 +1,29 @@
 import React, { useState } from "react";
 import { userCreatedRoutines } from "../api";
 
-const CreateRoutineForm = ({token}) => {
+const CreateRoutineForm = ({token, routines, setRoutines}) => {
     const [name, setName] = useState("");
     const [goal, setGoal] = useState("");
-    const [isPublic, setIsPublic] = useState("");
+    const [isPublic, setIsPublic] = useState(true);
     
     const handleSubmit = async (event) => {
         event.preventDefault();
         let pub;
         if(isPublic === "true") {
-            console.log('is public true', isPublic);
             pub = true
         } else {
-            console.log('is public false', isPublic);
             pub = false
         }
-        await userCreatedRoutines({token, name, goal, pub})
-
-        if(token) {
+        const routineToAdd = await userCreatedRoutines({token, name, goal, pub});
+        setRoutines([routineToAdd, ...routines])
             setName("")
             setIsPublic("")
             setGoal("")
-        }
-        console.log("SUBMITTED!!!!!!")
     }
-console.log('&&&&&&', typeof isPublic)
 return (
 <form onSubmit={handleSubmit}>Create your own Routine
     <select name="Public?" value={isPublic} onChange={(event) => 
-        {
-            console.log(event.target.value)
-            setIsPublic(event.target.value)}} required>
-    {/* <select name="Public?" value={isPublic} onChange={(event) => setIsPublic(event.target.value)} required> */}
-        <option disabled="disabled" selected="selected">Select an option.</option>
+        {setIsPublic(event.target.value)}} required>
         <option value="true">Public</option>
         <option value="false">Private</option>
     </select>
