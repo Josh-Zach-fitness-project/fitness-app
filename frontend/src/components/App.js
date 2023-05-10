@@ -21,6 +21,9 @@ const App = () => {
             setRoutines(fetchedRoutines);
             const fetchedActivities = await fetchActivities();
             setActivities(fetchedActivities)
+            if(token) {
+                setIsLoggedIn(true)
+            }
         }
         getData();
     }, [])
@@ -30,7 +33,7 @@ const App = () => {
     <Routes>
         <Route path='/' element={<Welcome token={token} setToken={setToken} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} user={user} setUser={setUser} />}></Route>
         <Route path='/activities' element={<Activities activities={activities}/>}></Route>
-        <Route path='/routines' element={<Routines routines={routines} />}></Route>
+        <Route path='/routines' element={<Routines routines={routines} user={user} isLoggedIn={isLoggedIn} token={token} />}></Route>
         <Route path='/my-routines' element={<MyRoutines />}></Route>
     </Routes>
     </>

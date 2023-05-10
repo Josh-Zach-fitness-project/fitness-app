@@ -40,3 +40,25 @@ export const fetchUser = async (token) => {
         console.error(err);
       }
 }
+
+export const userCreatedRoutines = async ({token, name, goal, isPublic}) => {
+    try {
+      const response = await fetch(`${APIURL}/routines`, {
+        method: "POST",
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          name: name,
+          goal: goal,
+          isPublic: isPublic
+        })
+      });
+      const result = await response.json();
+      console.log("this is our userCreatedRoutines result:", result);
+      return result
+    } catch (err) {
+      console.error(err);
+    }
+  }
