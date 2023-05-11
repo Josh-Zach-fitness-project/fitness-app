@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CreateRoutineForm from './CreateRoutineForm';
 
-const Routines = ({routines, setRoutines, isLoggedIn, token, filteredRoutines}) => {
+const Routines = ({routines, setRoutines, isLoggedIn, token, user, filteredRoutines}) => {
     const [myRoutines, setMyRoutines] = useState(false)
     
     if (!isLoggedIn) {
@@ -11,8 +11,9 @@ const Routines = ({routines, setRoutines, isLoggedIn, token, filteredRoutines}) 
         <section>
             <h1>These are the Public Routines</h1>
             {routines.length ? routines.map((routine) => {
-                const activities = routine.activities;
-                console.log(activities);
+          
+                    const activities = routine.activities;
+            console.log('$$$$$$$', routine)
                 return (
                     <article key={routine.id} id='singleRoutine'>
                         <h2>{routine.name}</h2>
@@ -29,8 +30,9 @@ const Routines = ({routines, setRoutines, isLoggedIn, token, filteredRoutines}) 
                                     </div>
                                     
                                 )
-                            }:  <h1>No activities to display</h1>
-                            )}
+                            }):  <h1>No activities to display</h1>
+                            
+                        }
                         </article>
                     </article>
                 )
@@ -44,7 +46,7 @@ const Routines = ({routines, setRoutines, isLoggedIn, token, filteredRoutines}) 
             return(
                 <>
                 <div>Routines Page</div>
-                <CreateRoutineForm token={token} routines={routines} setRoutines={setRoutines}/>
+                <CreateRoutineForm token={token} user={user} routines={routines} setRoutines={setRoutines}/>
                 <section>
                     <button
                     onClick={() => {
@@ -70,7 +72,7 @@ const Routines = ({routines, setRoutines, isLoggedIn, token, filteredRoutines}) 
             return(
                 <>
                 <div>My Routines Page</div>
-                <CreateRoutineForm token={token} routines={routines} setRoutines={setRoutines}/>
+                <CreateRoutineForm token={token} user={user} routines={routines} setRoutines={setRoutines}/>
                 <section>
                     <button
                     onClick={() => {

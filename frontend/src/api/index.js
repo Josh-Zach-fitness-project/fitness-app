@@ -7,7 +7,6 @@ export const fetchRoutines = async () => {
             'Content-Type': 'application/json',
             }});
         const result = await response.json();
-        console.log(result);
         return result;
     } catch (error) {
         console.log(error)
@@ -57,6 +56,7 @@ export const userCreatedRoutines = async ({token, name, goal, pub}) => {
         })
       });
       const result = await response.json();
+      console.log('EEEEEEEEE', result)
       return result
     } catch (err) {
       console.error(err);

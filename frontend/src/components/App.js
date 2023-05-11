@@ -31,11 +31,13 @@ const App = () => {
         getData();
     }, [])
 
+
     useEffect(() => {
         const filtered = routines.filter((routine) => {
             return routine.creatorId === user.id
         });
         setFilteredRoutines(filtered)
+        
 }, [routines])
 
     return(
