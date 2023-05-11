@@ -11,14 +11,14 @@ const Routines = ({routines, setRoutines, isLoggedIn, token, filteredRoutines}) 
         <section>
             <h1>These are the Public Routines</h1>
             {routines.length ? routines.map((routine) => {
-                // const {activities} = routine.activities;
+                const activities = routine.activities;
+                console.log(activities);
                 return (
                     <article key={routine.id} id='singleRoutine'>
                         <h2>{routine.name}</h2>
                         <p>{routine.goal}</p>
                         <p>{routine.creatorName}</p>
-                        <p>{routine.activities[0].name}</p>
-                        {/* <article>
+                        <article>
                             <h3>Activities for Routine</h3>
                             {activities.length ? activities.map((activity) => {
                                 return(
@@ -29,10 +29,9 @@ const Routines = ({routines, setRoutines, isLoggedIn, token, filteredRoutines}) 
                                     </div>
                                     
                                 )
-                            }:  <h1>No routines to display</h1>}
+                            }:  <h1>No activities to display</h1>
                             )}
-
-                        </article> */}
+                        </article>
                     </article>
                 )
                 
