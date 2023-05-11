@@ -12,11 +12,11 @@ const Login = ({setToken, setIsLoggedIn, setUser}) => {
             setToken(data.token);
             setIsLoggedIn(true);
             setUser(data.user);
-        } 
+        } else {alert('Incorrect Username or Password, please try again')}
         setUsername("");
         setPassword("");
     }
-
+    
     return(
         <>
         <h2>Log In</h2>
@@ -31,7 +31,6 @@ const Login = ({setToken, setIsLoggedIn, setUser}) => {
             
             >Login</button>
         </form>
-        
         </>
     )
 }
