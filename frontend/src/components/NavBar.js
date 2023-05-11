@@ -9,7 +9,6 @@ const NavBar = ({setIsLoggedIn, setUser, setToken, isLoggedIn}) => {
         <nav id='navbar'>
             <NavLink to='/' id='navFeature'>Welcome</NavLink>
             <NavLink to='/routines' id='navFeature'>Rountines</NavLink>
-            <NavLink to='/myroutines' id='navFeature'>My Routines</NavLink>
             <NavLink to='/activities' id='navFeature'>Activities</NavLink>
     
             <button
@@ -34,7 +33,6 @@ const NavBar = ({setIsLoggedIn, setUser, setToken, isLoggedIn}) => {
           <nav id='navbar'>
           <NavLink to='/' id='navFeature'>Welcome</NavLink>
           <NavLink to='/routines' id='navFeature'>Rountines</NavLink>
-          <NavLink to='/myroutines' id='navFeature'>My Routines</NavLink>
           <NavLink to='/activities' id='navFeature'>Activities</NavLink>
           
           </nav>

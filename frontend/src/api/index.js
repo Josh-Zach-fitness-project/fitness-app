@@ -7,6 +7,7 @@ export const fetchRoutines = async () => {
             'Content-Type': 'application/json',
             }});
         const result = await response.json();
+        console.log(result);
         return result;
     } catch (error) {
         console.log(error)
@@ -61,3 +62,25 @@ export const userCreatedRoutines = async ({token, name, goal, pub}) => {
       console.error(err);
     }
   }
+
+//   export const attachRoutineActivities = async ({activityId, count, duration}) => {
+//     try {
+//       const response = await fetch(`${APIURL}/routines/:id/activities`, {
+//         method: "POST",
+//         headers: {
+//         'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//           activityId: activityId,
+//           count: count, 
+//           duration: duration
+//         })
+//       });
+//       const result = await response.json();
+//       console.log(result);
+//       return result
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   }
+

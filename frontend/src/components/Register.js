@@ -29,7 +29,7 @@ const Register = ({setToken, setIsLoggedIn, setUser}) => {
             ></input>
             <input
             type='text'
-            minlength='8'
+            minLength='8'
             placeholder="Password(min. 8 characters)" 
             value={password} 
             onChange={(event) => setPassword(event.target.value)}
