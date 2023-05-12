@@ -4,16 +4,19 @@ import Activities from './Activities';
 import Routines from './Routines';
 import NavBar from './NavBar';
 import Welcome from './Welcome';
-import { fetchActivities, fetchRoutines } from '../api';
+import { fetchActivities, fetchRoutines, getMyRoutines } from '../api';
+import { getMe } from '../api/authentication';
 
 const App = () => {
     const [routines, setRoutines] = useState([]);
-    const [filteredRoutines, setFilteredRoutines] = useState([]);
     const [allActivities, setAllActivities] = useState([]);
     // const [routineActivities, setRoutineActivities] = useState([]);
     const [token, setToken] = useState(localStorage.token);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState({});
+    const [allMyRoutines, setAllMyRoutines] = useState([]);
+
+
 
     useEffect(() => {
         const getData = async () => {
@@ -21,24 +24,27 @@ const App = () => {
             setRoutines(fetchedRoutines);
             const fetchedActivities = await fetchActivities();
             setAllActivities(fetchedActivities);
-            // const {activities: {activityId, count, duration}} = routines;
-            // const fetchedRoutineActivities = await attachRoutineActivities({activityId, count, duration});
-            // setRoutineActivities(fetchedRoutineActivities);
             if(token) {
+                const me = await getMe(token);
+                setUser(me);
                 setIsLoggedIn(true)
             }
         }
         getData();
     }, [])
 
-
     useEffect(() => {
-        const filtered = routines.filter((routine) => {
-            return routine.creatorId === user.id
-        });
-        setFilteredRoutines(filtered)
-        
-}, [routines])
+        const username = user.username;
+                const myRoutinesFunct = async () => {
+
+                    const fetchedAllMyRoutines = await getMyRoutines({username, token});
+                    console.log('^^^^^^^', fetchedAllMyRoutines);
+                    setAllMyRoutines(fetchedAllMyRoutines);
+                    console.log('$$$$$$', allMyRoutines)
+                }
+                myRoutinesFunct()
+    }, [isLoggedIn])
+
 
     return(
     <>
@@ -46,7 +52,7 @@ const App = () => {
     <Routes>
         <Route path='/' element={<Welcome token={token} setToken={setToken} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} user={user} setUser={setUser} />}></Route>
         <Route path='/activities' element={<Activities allActivities={allActivities}/>}></Route>
-        <Route path='/routines' element={<Routines filteredRoutines={filteredRoutines} setFilteredRoutines={setFilteredRoutines} routines={routines} user={user} isLoggedIn={isLoggedIn} token={token} setRoutines={setRoutines} allActivities={allActivities}/>}></Route>
+        <Route path='/routines' element={<Routines allMyRoutines={allMyRoutines} routines={routines} user={user} isLoggedIn={isLoggedIn} token={token} setRoutines={setRoutines} allActivities={allActivities} setAllMyRoutines={setAllMyRoutines}/>}></Route>
     </Routes>
     </>
     )

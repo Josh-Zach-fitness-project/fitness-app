@@ -1,12 +1,13 @@
+/* eslint-disable no-unused-vars */
+
 import React, { useState } from 'react';
 import AddActivityForm from './AddActivityForm';
 import CreateRoutineForm from './CreateRoutineForm';
 import DeleteRoutineButton from './DeleteRoutineButton';
 import EditRoutineButton from './EditRoutineButton';
 
-const Routines = ({routines, setRoutines, isLoggedIn, token, user, filteredRoutines, allActivities}) => {
-    const [myRoutines, setMyRoutines] = useState(false)
-    
+const Routines = ({allMyRoutines, setAllMyRoutines, routines, setRoutines, isLoggedIn, token, user, allActivities}) => {
+    const [myRoutines, setMyRoutines] = useState(false);
     if (!isLoggedIn) {
         return(
             <>
@@ -49,7 +50,7 @@ const Routines = ({routines, setRoutines, isLoggedIn, token, user, filteredRouti
             return(
                 <>
                 <div>Routines Page</div>
-                <CreateRoutineForm token={token} user={user} routines={routines} setRoutines={setRoutines}/>
+                <CreateRoutineForm allMyRoutines={allMyRoutines} setAllMyRoutines={setAllMyRoutines} token={token} user={user} routines={routines} setRoutines={setRoutines}/>
                 <section>
                     <button
                     onClick={() => {
@@ -90,27 +91,27 @@ const Routines = ({routines, setRoutines, isLoggedIn, token, user, filteredRouti
             return(
                 <>
                 <div>My Routines Page</div>
-                <CreateRoutineForm token={token} user={user} routines={routines} setRoutines={setRoutines}/>
+                <CreateRoutineForm allMyRoutines={allMyRoutines} setAllMyRoutines={setAllMyRoutines} token={token} user={user} routines={routines} setRoutines={setRoutines}/>
                 <section>
                     <button
-                    onClick={() => {
+                    onClick={ async () => {
                         setMyRoutines(false);
                     }}
                     >View Public Routines</button>
                     <h1>These are my Routines</h1>
-                    {filteredRoutines.length ? filteredRoutines.map((routine) => {
+                    {allMyRoutines.length ? allMyRoutines.map((routine) => {
                         const activities = routine.activities;
+        
                         return (
                             <article key={routine.id} id='singleRoutine'>
                                 <h2>{routine.name}</h2>
                                 <p>{routine.goal}</p>
                                 <p>{routine.creatorName}</p>
-                                <DeleteRoutineButton />
-                                <EditRoutineButton />
-                                <AddActivityForm allActivities={allActivities}/>
+                                 <DeleteRoutineButton username={routine.creatorName} routineId={routine.id} setAllMyRoutines={setAllMyRoutines} setRoutines={setRoutines} token={token}/>
+                                <AddActivityForm allActivities={allActivities} routineId={routine.id}/>
                                 <article>
-                            <h3>Activities for Routine</h3>
-                            {activities.length ? activities.map((activity) => {
+                            <h1>Activities for Routine</h1>
+                            {activities ? activities.map((activity) => {
                                 return(
                                     <div key={activity.id}>
                                         <p>{activity.name}</p>

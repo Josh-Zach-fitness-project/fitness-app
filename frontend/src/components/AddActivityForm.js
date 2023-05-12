@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { attachRoutineActivities } from "../api";
 
-const AddActivityForm = ({allActivities}) => {
+const AddActivityForm = ({allActivities, routineId}) => {
     const [count, setCount] = useState("");
     const [duration, setDuration] = useState("");
     const [chosenActivity, setChosenActivity] = useState("");
@@ -13,7 +13,7 @@ const AddActivityForm = ({allActivities}) => {
         console.log("this is our chosen activity:", chosenActivity)
 
         
-        await attachRoutineActivities({activityId, count, duration});
+        await attachRoutineActivities({activityId, count, duration, routineId});
 
         setCount("");
         setDuration("");
