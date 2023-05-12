@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { userCreatedRoutines } from "../api";
+import { fetchRoutines, userCreatedRoutines } from "../api";
 
-const CreateRoutineForm = ({token, routines, setRoutines}) => {
+const CreateRoutineForm = ({token, setRoutines, user, setAllMyRoutines, allMyRoutines}) => {
     const [name, setName] = useState("");
     const [goal, setGoal] = useState("");
     const [isPublic, setIsPublic] = useState(true);
@@ -15,7 +15,11 @@ const CreateRoutineForm = ({token, routines, setRoutines}) => {
             pub = false
         }
         const routineToAdd = await userCreatedRoutines({token, name, goal, pub});
-        setRoutines([routineToAdd, ...routines])
+        routineToAdd.creatorName = user.username;
+        console.log('OOOOOO', routineToAdd)
+        const fetchedRoutines = await fetchRoutines();
+            setRoutines(fetchedRoutines);
+            setAllMyRoutines([routineToAdd, ...allMyRoutines])
             setName("")
             setIsPublic("")
             setGoal("")
@@ -24,6 +28,7 @@ return (
 <form onSubmit={handleSubmit}>Create your own Routine
     <select name="Public?" value={isPublic} onChange={(event) => 
         {setIsPublic(event.target.value)}} required>
+        <option placeholder="Select">Select</option>
         <option value="true">Public</option>
         <option value="false">Private</option>
     </select>

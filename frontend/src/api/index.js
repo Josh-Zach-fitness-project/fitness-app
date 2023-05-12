@@ -56,8 +56,66 @@ export const userCreatedRoutines = async ({token, name, goal, pub}) => {
         })
       });
       const result = await response.json();
+    //   console.log('EEEEEEEEE', result)
       return result
     } catch (err) {
       console.error(err);
     }
   }
+
+  export const attachRoutineActivities = async ({activityId, count, duration, routineId}) => {
+    console.log('KKKKKK', {activityId, count, duration, routineId})
+    try {
+      const response = await fetch(`${APIURL}/routines/${routineId}/activities`, {
+        method: "POST",
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          activityId: activityId,
+          count: count, 
+          duration: duration
+        })
+      });
+    //   console.log("api response", response);
+      const result = await response.json();
+      console.log("attachRoutineActivities Result:", result);
+      return result
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+export  const deleteRoutine = async ({routineId, token}) => {
+    try {
+      const response = await fetch(`${APIURL}/routines/${routineId}`, {
+        method: "DELETE",
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+      return result
+    } catch (err) {
+      console.error(err);
+    }
+}
+
+export const getMyRoutines = async ({username, token}) => {
+  console.log('ppppp', token)
+  try {
+    const response = await fetch(`${APIURL}/users/${username}/routines`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    });
+    const result = await response.json();
+    console.log(result);
+    return result
+  } catch (err) {
+    console.error(err);
+  }
+}

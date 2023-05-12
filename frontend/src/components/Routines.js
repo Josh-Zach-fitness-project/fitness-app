@@ -1,22 +1,43 @@
-import React, { useState } from 'react';
-import CreateRoutineForm from './CreateRoutineForm';
+/* eslint-disable no-unused-vars */
 
-const Routines = ({routines, setRoutines, isLoggedIn, token, filteredRoutines}) => {
-    const [myRoutines, setMyRoutines] = useState(false)
-    
+import React, { useState } from 'react';
+import AddActivityForm from './AddActivityForm';
+import CreateRoutineForm from './CreateRoutineForm';
+import DeleteRoutineButton from './DeleteRoutineButton';
+import EditRoutineButton from './EditRoutineButton';
+
+const Routines = ({allMyRoutines, setAllMyRoutines, routines, setRoutines, isLoggedIn, token, user, allActivities}) => {
+    const [myRoutines, setMyRoutines] = useState(false);
     if (!isLoggedIn) {
         return(
-        <>
+            <>
         <div>Routines Page</div>
         <section>
             <h1>These are the Public Routines</h1>
             {routines.length ? routines.map((routine) => {
+                const activities = routine.activities;
+                
+                // console.log('$$$$$$$', routine)
                 return (
                     <article key={routine.id} id='singleRoutine'>
                         <h2>{routine.name}</h2>
                         <p>{routine.goal}</p>
                         <p>{routine.creatorName}</p>
-                        {/* <p>{routine.activities}</p> */}
+                        <article>
+                            <h3>Activities for Routine</h3>
+                            {activities.length ? activities.map((activity) => {
+                                return(
+                                    <div key={activity.id}>
+                                        <p>{activity.name}</p>
+                                        <p>{activity.count}</p>
+                                        <p>{activity.duration}</p>
+                                    </div>
+                                    
+                                )
+                            }):  <h1>No activities to display</h1>
+                            
+                        }
+                        </article>
                     </article>
                 )
                 
@@ -29,7 +50,7 @@ const Routines = ({routines, setRoutines, isLoggedIn, token, filteredRoutines}) 
             return(
                 <>
                 <div>Routines Page</div>
-                <CreateRoutineForm token={token} routines={routines} setRoutines={setRoutines}/>
+                <CreateRoutineForm allMyRoutines={allMyRoutines} setAllMyRoutines={setAllMyRoutines} token={token} user={user} routines={routines} setRoutines={setRoutines}/>
                 <section>
                     <button
                     onClick={() => {
@@ -38,12 +59,27 @@ const Routines = ({routines, setRoutines, isLoggedIn, token, filteredRoutines}) 
                     >View My Routines</button>
                     <h1>These are the Public Routines</h1>
                     {routines.length ? routines.map((routine) => {
+                        const activities = routine.activities;
                         return (
                             <article key={routine.id} id='singleRoutine'>
                                 <h2>{routine.name}</h2>
                                 <p>{routine.goal}</p>
                                 <p>{routine.creatorName}</p>
-                                {/* <p>{routine.activities}</p> */}
+                                <article>
+                            <h3>Activities for Routine</h3>
+                            {activities.length ? activities.map((activity) => {
+                                return(
+                                    <div key={activity.id}>
+                                        <p>{activity.name}</p>
+                                        <p>{activity.count}</p>
+                                        <p>{activity.duration}</p>
+                                    </div>
+                                    
+                                )
+                            }):  <h1>No activities to display</h1>
+                            
+                        }
+                        </article>
                             </article>
                         )
                         
@@ -55,21 +91,39 @@ const Routines = ({routines, setRoutines, isLoggedIn, token, filteredRoutines}) 
             return(
                 <>
                 <div>My Routines Page</div>
-                <CreateRoutineForm token={token} routines={routines} setRoutines={setRoutines}/>
+                <CreateRoutineForm allMyRoutines={allMyRoutines} setAllMyRoutines={setAllMyRoutines} token={token} user={user} routines={routines} setRoutines={setRoutines}/>
                 <section>
                     <button
-                    onClick={() => {
+                    onClick={ async () => {
                         setMyRoutines(false);
                     }}
                     >View Public Routines</button>
                     <h1>These are my Routines</h1>
-                    {filteredRoutines.length ? filteredRoutines.map((routine) => {
+                    {allMyRoutines.length ? allMyRoutines.map((routine) => {
+                        const activities = routine.activities;
+        
                         return (
                             <article key={routine.id} id='singleRoutine'>
                                 <h2>{routine.name}</h2>
                                 <p>{routine.goal}</p>
                                 <p>{routine.creatorName}</p>
-                                {/* <p>{routine.activities}</p> */}
+                                 <DeleteRoutineButton username={routine.creatorName} routineId={routine.id} setAllMyRoutines={setAllMyRoutines} setRoutines={setRoutines} token={token}/>
+                                <AddActivityForm allActivities={allActivities} routineId={routine.id}/>
+                                <article>
+                            <h1>Activities for Routine</h1>
+                            {activities ? activities.map((activity) => {
+                                return(
+                                    <div key={activity.id}>
+                                        <p>{activity.name}</p>
+                                        <p>{activity.count}</p>
+                                        <p>{activity.duration}</p>
+                                    </div>
+                                    
+                                )
+                            }):  <h1>No activities to display</h1>
+                            
+                        }
+                        </article>
                             </article>
                         )
                         
