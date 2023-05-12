@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
+import AddActivityForm from './AddActivityForm';
 import CreateRoutineForm from './CreateRoutineForm';
+import DeleteRoutineButton from './DeleteRoutineButton';
+import EditRoutineButton from './EditRoutineButton';
 
-const Routines = ({routines, setRoutines, isLoggedIn, token, user, filteredRoutines}) => {
+const Routines = ({routines, setRoutines, isLoggedIn, token, user, filteredRoutines, allActivities}) => {
     const [myRoutines, setMyRoutines] = useState(false)
     
     if (!isLoggedIn) {
         return(
-        <>
+            <>
         <div>Routines Page</div>
         <section>
             <h1>These are the Public Routines</h1>
             {routines.length ? routines.map((routine) => {
-          
-                    const activities = routine.activities;
-            console.log('$$$$$$$', routine)
+                const activities = routine.activities;
+                
+                // console.log('$$$$$$$', routine)
                 return (
                     <article key={routine.id} id='singleRoutine'>
                         <h2>{routine.name}</h2>
@@ -55,12 +58,27 @@ const Routines = ({routines, setRoutines, isLoggedIn, token, user, filteredRouti
                     >View My Routines</button>
                     <h1>These are the Public Routines</h1>
                     {routines.length ? routines.map((routine) => {
+                        const activities = routine.activities;
                         return (
                             <article key={routine.id} id='singleRoutine'>
                                 <h2>{routine.name}</h2>
                                 <p>{routine.goal}</p>
                                 <p>{routine.creatorName}</p>
-                                {/* <p>{routine.activities}</p> */}
+                                <article>
+                            <h3>Activities for Routine</h3>
+                            {activities.length ? activities.map((activity) => {
+                                return(
+                                    <div key={activity.id}>
+                                        <p>{activity.name}</p>
+                                        <p>{activity.count}</p>
+                                        <p>{activity.duration}</p>
+                                    </div>
+                                    
+                                )
+                            }):  <h1>No activities to display</h1>
+                            
+                        }
+                        </article>
                             </article>
                         )
                         
@@ -81,12 +99,30 @@ const Routines = ({routines, setRoutines, isLoggedIn, token, user, filteredRouti
                     >View Public Routines</button>
                     <h1>These are my Routines</h1>
                     {filteredRoutines.length ? filteredRoutines.map((routine) => {
+                        const activities = routine.activities;
                         return (
                             <article key={routine.id} id='singleRoutine'>
                                 <h2>{routine.name}</h2>
                                 <p>{routine.goal}</p>
                                 <p>{routine.creatorName}</p>
-                                {/* <p>{routine.activities}</p> */}
+                                <DeleteRoutineButton />
+                                <EditRoutineButton />
+                                <AddActivityForm allActivities={allActivities}/>
+                                <article>
+                            <h3>Activities for Routine</h3>
+                            {activities.length ? activities.map((activity) => {
+                                return(
+                                    <div key={activity.id}>
+                                        <p>{activity.name}</p>
+                                        <p>{activity.count}</p>
+                                        <p>{activity.duration}</p>
+                                    </div>
+                                    
+                                )
+                            }):  <h1>No activities to display</h1>
+                            
+                        }
+                        </article>
                             </article>
                         )
                         
