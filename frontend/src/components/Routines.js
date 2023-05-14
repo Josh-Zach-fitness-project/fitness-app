@@ -11,9 +11,11 @@ const Routines = ({allMyRoutines, setAllMyRoutines, routines, setRoutines, isLog
     if (!isLoggedIn) {
         return(
             <>
-        <div>Routines Page</div>
+            <div className='routine-container'>
+
+        <div></div>
         <section>
-            <h1>These are the Public Routines</h1>
+            <h1 className='routines-title'>Public Routines</h1>
             {routines.length ? routines.map((routine) => {
                 const activities = routine.activities;
                 
@@ -43,21 +45,26 @@ const Routines = ({allMyRoutines, setAllMyRoutines, routines, setRoutines, isLog
                 
             }) : <h1>No routines to display</h1>}
         </section>
+            </div>
         </>
         )
     } else {
         if (!myRoutines) {
             return(
                 <>
-                <div>Routines Page</div>
+                <div className='routine-container'>
+                <div className='routines-title'>Workout Routines</div>
                 <CreateRoutineForm allMyRoutines={allMyRoutines} setAllMyRoutines={setAllMyRoutines} token={token} user={user} routines={routines} setRoutines={setRoutines}/>
-                <section>
+                <section
+                    className='routine-toggle'
+                >
                     <button
+                    className='toggle-button'
                     onClick={() => {
                         setMyRoutines(true);
                     }}
                     >View My Routines</button>
-                    <h1>These are the Public Routines</h1>
+                    <h1>Public Routines</h1>
                     {routines.length ? routines.map((routine) => {
                         const activities = routine.activities;
                         return (
@@ -85,20 +92,25 @@ const Routines = ({allMyRoutines, setAllMyRoutines, routines, setRoutines, isLog
                         
                     }) : <h1>No routines to display</h1>}
                 </section>
+                </div>
                 </>
                 )
         } else {
             return(
                 <>
-                <div>My Routines Page</div>
+                <div className='routine-container'>
+
+                <div className='routines-title'>My Routines</div>
                 <CreateRoutineForm allMyRoutines={allMyRoutines} setAllMyRoutines={setAllMyRoutines} token={token} user={user} routines={routines} setRoutines={setRoutines}/>
-                <section>
+                <section
+                    className='routine-toggle'
+                >
                     <button
+                    className='toggle-button'
                     onClick={ async () => {
                         setMyRoutines(false);
                     }}
                     >View Public Routines</button>
-                    <h1>These are my Routines</h1>
                     {allMyRoutines.length ? allMyRoutines.map((routine) => {
                         const activities = routine.activities;
         
@@ -129,6 +141,7 @@ const Routines = ({allMyRoutines, setAllMyRoutines, routines, setRoutines, isLog
                         
                     }) : <h1>No routines to display</h1>}
                 </section>
+                </div>
                 </>
                 )
         }

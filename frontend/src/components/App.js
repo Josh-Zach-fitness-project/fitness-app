@@ -4,6 +4,7 @@ import Activities from './Activities';
 import Routines from './Routines';
 import NavBar from './NavBar';
 import Welcome from './Welcome';
+import Footer from './Footer';
 import { fetchActivities, fetchRoutines, getMyRoutines } from '../api';
 import { getMe } from '../api/authentication';
 
@@ -48,12 +49,42 @@ const App = () => {
 
     return(
     <>
+    <div className='app'>
     <NavBar setIsLoggedIn={setIsLoggedIn} setUser={setUser} setToken={setToken} isLoggedIn={isLoggedIn}/>
     <Routes>
-        <Route path='/' element={<Welcome token={token} setToken={setToken} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} user={user} setUser={setUser} />}></Route>
-        <Route path='/activities' element={<Activities allActivities={allActivities}/>}></Route>
-        <Route path='/routines' element={<Routines allMyRoutines={allMyRoutines} routines={routines} user={user} isLoggedIn={isLoggedIn} token={token} setRoutines={setRoutines} allActivities={allActivities} setAllMyRoutines={setAllMyRoutines}/>}></Route>
+        <Route 
+            path='/' 
+            element={<Welcome 
+                token={token} 
+                setToken={setToken} 
+                isLoggedIn={isLoggedIn} 
+                setIsLoggedIn={setIsLoggedIn} 
+                user={user} 
+                setUser={setUser} 
+            />}>
+        </Route>
+        <Route 
+            path='/activities' 
+            element={<Activities 
+                allActivities={allActivities}
+            />}>
+        </Route>
+        <Route 
+            path='/routines' 
+            element={<Routines 
+                allMyRoutines={allMyRoutines} 
+                routines={routines} 
+                user={user} 
+                isLoggedIn={isLoggedIn} 
+                token={token} 
+                setRoutines={setRoutines} 
+                allActivities={allActivities} 
+                setAllMyRoutines={setAllMyRoutines}
+            />}>
+        </Route>
     </Routes>
+    <Footer />`
+    </div>
     </>
     )
 }

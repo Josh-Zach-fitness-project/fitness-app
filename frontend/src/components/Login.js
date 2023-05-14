@@ -19,8 +19,9 @@ const Login = ({setToken, setIsLoggedIn, setUser}) => {
     
     return(
         <>
+        <div className="log-reg">
         <h2>Log In</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="inp-boxes">
             <input
             placeholder="Username" value={username} onChange={(event) => setUsername(event.target.value)}
             ></input>
@@ -28,9 +29,10 @@ const Login = ({setToken, setIsLoggedIn, setUser}) => {
             placeholder="Password" value={password} onChange={(event) => setPassword(event.target.value)}
             ></input>
             <button type="submit"
-            
+            className="button-log-reg"
             >Login</button>
         </form>
+        </div>
         </>
     )
 }

@@ -22,8 +22,12 @@ const AddActivityForm = ({allActivities, routineId}) => {
 
     }
 return (
-<form onSubmit={handleSubmit}>Add Activity to Routine
-    <select name="Public?" value={chosenActivity} onChange={(event) => 
+<form 
+    className="activity-form"
+    onSubmit={handleSubmit}>Add Activity to Routine
+    <select 
+        className="activity-selection"
+        name="Public?" value={chosenActivity} onChange={(event) => 
         {setChosenActivity(event.target.value)}} required>
         {allActivities.length ? allActivities.map((activity) => {
             return(

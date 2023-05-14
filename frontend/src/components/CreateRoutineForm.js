@@ -25,7 +25,10 @@ const CreateRoutineForm = ({token, setRoutines, user, setAllMyRoutines, allMyRou
             setGoal("")
     }
 return (
-<form onSubmit={handleSubmit}>Create your own Routine
+    <div className="routine-form-container">
+<form 
+    className="routine-form"
+    onSubmit={handleSubmit}>Create your own Routine
     <select name="Public?" value={isPublic} onChange={(event) => 
         {setIsPublic(event.target.value)}} required>
         <option placeholder="Select">Select</option>
@@ -43,6 +46,7 @@ return (
     <button type="submit"
     >Submit</button>
 </form>
+    </div>
 
 )
 }
