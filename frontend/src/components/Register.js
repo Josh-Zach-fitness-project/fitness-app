@@ -19,8 +19,9 @@ const Register = ({setToken, setIsLoggedIn, setUser}) => {
 
     return(
         <>
+        <div className="log-reg">
         <h2>Register</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="inp-boxes">
             <input
             placeholder="Username" 
             value={username} 
@@ -36,10 +37,11 @@ const Register = ({setToken, setIsLoggedIn, setUser}) => {
             required
             ></input>
             <button type="submit"
-            
+            className="button-log-reg"
             >Submit</button>
         </form>
         
+        </div>
         </>
     )
 }

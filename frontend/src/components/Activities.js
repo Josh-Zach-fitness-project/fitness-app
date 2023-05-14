@@ -1,13 +1,13 @@
 import React from "react";
 
-const Activities = ({activities}) => {
+const Activities = ({allActivities}) => {
     return(
     <>
-        <section>
-        <h1>Activities</h1>
-            {activities.length ? activities.map((activity) => {
+        <section className='routine-container'>
+        <h1 className='routines-title'>Activities</h1>
+            {allActivities.length ? allActivities.map((activity) => {
                 return (
-                    <article key={activity.id} id='singleActivity'>
+                    <article key={activity.id} id='singleRoutine'>
                         <h2>{activity.name}</h2>
                         <p>{activity.description}</p>
                     </article>
